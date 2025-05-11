@@ -1,40 +1,62 @@
 package com.concert;
 
+import io.grpc.stub.StreamObserver;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.grpc.stub.StreamObserver;
-
 public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationServiceImplBase {
 
-    private final Map<String, Integer> shows = new HashMap<>();
+    static class Show {
+        int concertSeats;
+        int afterPartyTickets;
+
+        Show(int concertSeats, int afterPartyTickets) {
+            this.concertSeats = concertSeats;
+            this.afterPartyTickets = afterPartyTickets;
+        }
+    }
+
+    private final Map<String, Show> shows = new HashMap<>();
 
     @Override
     public void addShow(AddShowRequest request, StreamObserver<AddShowResponse> responseObserver) {
-        shows.put(request.getShowName(), request.getSeatCount());
+        shows.put(request.getShowName(), new Show(request.getConcertSeats(), request.getAfterPartyTickets()));
 
         AddShowResponse response = AddShowResponse.newBuilder()
                 .setStatus("Show added: " + request.getShowName())
                 .build();
-
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
 
     @Override
-    public void reserveSeat(ReserveRequest request, StreamObserver<ReserveResponse> responseObserver) {
-        String showName = request.getShowName();
-        int seats = shows.getOrDefault(showName, 0);
+    public void reserveTicket(ReserveTicketRequest request, StreamObserver<ReserveTicketResponse> responseObserver) {
+        Show show = shows.get(request.getShowName());
+
         String status;
 
-        if (seats > 0) {
-            shows.put(showName, seats - 1);
-            status = "Seat reserved!";
-        } else {
-            status = "No seats available.";
+        synchronized (this) {
+            if (show == null) {
+                status = "Show not found.";
+            } else if (request.getIncludeAfterParty()) {
+                if (show.concertSeats > 0 && show.afterPartyTickets > 0) {
+                    show.concertSeats--;
+                    show.afterPartyTickets--;
+                    status = "Combo reserved: concert + after-party";
+                } else {
+                    status = "Booking failed: not enough tickets for combo.";
+                }
+            } else {
+                if (show.concertSeats > 0) {
+                    show.concertSeats--;
+                    status = "Concert ticket reserved.";
+                } else {
+                    status = "Concert sold out.";
+                }
+            }
         }
 
-        ReserveResponse response = ReserveResponse.newBuilder()
+        ReserveTicketResponse response = ReserveTicketResponse.newBuilder()
                 .setStatus(status)
                 .build();
 

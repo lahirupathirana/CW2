@@ -57,7 +57,12 @@ private static final long serialVersionUID = 0L;
           }
           case 16: {
 
-            seatCount_ = input.readInt32();
+            concertSeats_ = input.readInt32();
+            break;
+          }
+          case 24: {
+
+            afterPartyTickets_ = input.readInt32();
             break;
           }
           default: {
@@ -130,15 +135,26 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int SEATCOUNT_FIELD_NUMBER = 2;
-  private int seatCount_;
+  public static final int CONCERTSEATS_FIELD_NUMBER = 2;
+  private int concertSeats_;
   /**
-   * <code>int32 seatCount = 2;</code>
-   * @return The seatCount.
+   * <code>int32 concertSeats = 2;</code>
+   * @return The concertSeats.
    */
   @java.lang.Override
-  public int getSeatCount() {
-    return seatCount_;
+  public int getConcertSeats() {
+    return concertSeats_;
+  }
+
+  public static final int AFTERPARTYTICKETS_FIELD_NUMBER = 3;
+  private int afterPartyTickets_;
+  /**
+   * <code>int32 afterPartyTickets = 3;</code>
+   * @return The afterPartyTickets.
+   */
+  @java.lang.Override
+  public int getAfterPartyTickets() {
+    return afterPartyTickets_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -158,8 +174,11 @@ private static final long serialVersionUID = 0L;
     if (!getShowNameBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, showName_);
     }
-    if (seatCount_ != 0) {
-      output.writeInt32(2, seatCount_);
+    if (concertSeats_ != 0) {
+      output.writeInt32(2, concertSeats_);
+    }
+    if (afterPartyTickets_ != 0) {
+      output.writeInt32(3, afterPartyTickets_);
     }
     unknownFields.writeTo(output);
   }
@@ -173,9 +192,13 @@ private static final long serialVersionUID = 0L;
     if (!getShowNameBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, showName_);
     }
-    if (seatCount_ != 0) {
+    if (concertSeats_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(2, seatCount_);
+        .computeInt32Size(2, concertSeats_);
+    }
+    if (afterPartyTickets_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(3, afterPartyTickets_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -194,8 +217,10 @@ private static final long serialVersionUID = 0L;
 
     if (!getShowName()
         .equals(other.getShowName())) return false;
-    if (getSeatCount()
-        != other.getSeatCount()) return false;
+    if (getConcertSeats()
+        != other.getConcertSeats()) return false;
+    if (getAfterPartyTickets()
+        != other.getAfterPartyTickets()) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -209,8 +234,10 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + SHOWNAME_FIELD_NUMBER;
     hash = (53 * hash) + getShowName().hashCode();
-    hash = (37 * hash) + SEATCOUNT_FIELD_NUMBER;
-    hash = (53 * hash) + getSeatCount();
+    hash = (37 * hash) + CONCERTSEATS_FIELD_NUMBER;
+    hash = (53 * hash) + getConcertSeats();
+    hash = (37 * hash) + AFTERPARTYTICKETS_FIELD_NUMBER;
+    hash = (53 * hash) + getAfterPartyTickets();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -346,7 +373,9 @@ private static final long serialVersionUID = 0L;
       super.clear();
       showName_ = "";
 
-      seatCount_ = 0;
+      concertSeats_ = 0;
+
+      afterPartyTickets_ = 0;
 
       return this;
     }
@@ -375,7 +404,8 @@ private static final long serialVersionUID = 0L;
     public com.concert.AddShowRequest buildPartial() {
       com.concert.AddShowRequest result = new com.concert.AddShowRequest(this);
       result.showName_ = showName_;
-      result.seatCount_ = seatCount_;
+      result.concertSeats_ = concertSeats_;
+      result.afterPartyTickets_ = afterPartyTickets_;
       onBuilt();
       return result;
     }
@@ -428,8 +458,11 @@ private static final long serialVersionUID = 0L;
         showName_ = other.showName_;
         onChanged();
       }
-      if (other.getSeatCount() != 0) {
-        setSeatCount(other.getSeatCount());
+      if (other.getConcertSeats() != 0) {
+        setConcertSeats(other.getConcertSeats());
+      }
+      if (other.getAfterPartyTickets() != 0) {
+        setAfterPartyTickets(other.getAfterPartyTickets());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -536,33 +569,64 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int seatCount_ ;
+    private int concertSeats_ ;
     /**
-     * <code>int32 seatCount = 2;</code>
-     * @return The seatCount.
+     * <code>int32 concertSeats = 2;</code>
+     * @return The concertSeats.
      */
     @java.lang.Override
-    public int getSeatCount() {
-      return seatCount_;
+    public int getConcertSeats() {
+      return concertSeats_;
     }
     /**
-     * <code>int32 seatCount = 2;</code>
-     * @param value The seatCount to set.
+     * <code>int32 concertSeats = 2;</code>
+     * @param value The concertSeats to set.
      * @return This builder for chaining.
      */
-    public Builder setSeatCount(int value) {
+    public Builder setConcertSeats(int value) {
       
-      seatCount_ = value;
+      concertSeats_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>int32 seatCount = 2;</code>
+     * <code>int32 concertSeats = 2;</code>
      * @return This builder for chaining.
      */
-    public Builder clearSeatCount() {
+    public Builder clearConcertSeats() {
       
-      seatCount_ = 0;
+      concertSeats_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private int afterPartyTickets_ ;
+    /**
+     * <code>int32 afterPartyTickets = 3;</code>
+     * @return The afterPartyTickets.
+     */
+    @java.lang.Override
+    public int getAfterPartyTickets() {
+      return afterPartyTickets_;
+    }
+    /**
+     * <code>int32 afterPartyTickets = 3;</code>
+     * @param value The afterPartyTickets to set.
+     * @return This builder for chaining.
+     */
+    public Builder setAfterPartyTickets(int value) {
+      
+      afterPartyTickets_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>int32 afterPartyTickets = 3;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearAfterPartyTickets() {
+      
+      afterPartyTickets_ = 0;
       onChanged();
       return this;
     }

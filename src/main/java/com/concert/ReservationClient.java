@@ -6,40 +6,42 @@ import io.grpc.ManagedChannelBuilder;
 public class ReservationClient {
 
     public static void main(String[] args) {
-        // Connect to the server
         ManagedChannel channel = ManagedChannelBuilder
                 .forAddress("localhost", 9090)
                 .usePlaintext()
                 .build();
 
-        // Create a blocking stub (synchronous calls)
         ReservationServiceGrpc.ReservationServiceBlockingStub client =
                 ReservationServiceGrpc.newBlockingStub(channel);
 
-        // Add a new show
         AddShowRequest addRequest = AddShowRequest.newBuilder()
-                .setShowName("Coldplay Live")
-                .setSeatCount(2)
+                .setShowName("CW2 Gala Night")
+                .setConcertSeats(2)
+                .setAfterPartyTickets(1)
                 .build();
 
         AddShowResponse addResponse = client.addShow(addRequest);
-        System.out.println("Add Show Response: " + addResponse.getStatus());
+        System.out.println("Add Show: " + addResponse.getStatus());
 
-        // Reserve a seat
-        ReserveRequest reserveRequest = ReserveRequest.newBuilder()
-                .setShowName("Coldplay Live")
+        ReserveTicketRequest comboRequest = ReserveTicketRequest.newBuilder()
+                .setShowName("CW2 Gala Night")
+                .setIncludeAfterParty(true)
                 .build();
 
-        ReserveResponse reserveResponse1 = client.reserveSeat(reserveRequest);
-        System.out.println("First reservation: " + reserveResponse1.getStatus());
+        ReserveTicketResponse combo1 = client.reserveTicket(comboRequest);
+        System.out.println("Combo #1: " + combo1.getStatus());
 
-        ReserveResponse reserveResponse2 = client.reserveSeat(reserveRequest);
-        System.out.println("Second reservation: " + reserveResponse2.getStatus());
+        ReserveTicketRequest concertOnlyRequest = ReserveTicketRequest.newBuilder()
+                .setShowName("CW2 Gala Night")
+                .setIncludeAfterParty(false)
+                .build();
 
-        ReserveResponse reserveResponse3 = client.reserveSeat(reserveRequest);
-        System.out.println("Third reservation: " + reserveResponse3.getStatus());
+        ReserveTicketResponse concertOnly = client.reserveTicket(concertOnlyRequest);
+        System.out.println("Concert only: " + concertOnly.getStatus());
 
-        // Close the channel
+        ReserveTicketResponse combo2 = client.reserveTicket(comboRequest);
+        System.out.println("Combo #2: " + combo2.getStatus());
+
         channel.shutdown();
     }
 }

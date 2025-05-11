@@ -6,23 +6,24 @@ option java_outer_classname = "ReservationProto";
 
 service ReservationService {
   rpc AddShow(AddShowRequest) returns (AddShowResponse);
-  rpc ReserveSeat(ReserveRequest) returns (ReserveResponse);
+  rpc ReserveTicket(ReserveTicketRequest) returns (ReserveTicketResponse);
 }
 
 message AddShowRequest {
   string showName = 1;
-  int32 seatCount = 2;
-  
+  int32 concertSeats = 2;
+  int32 afterPartyTickets = 3;
 }
 
 message AddShowResponse {
   string status = 1;
 }
 
-message ReserveRequest {
+message ReserveTicketRequest {
   string showName = 1;
+  bool includeAfterParty = 2;
 }
 
-message ReserveResponse {
+message ReserveTicketResponse {
   string status = 1;
 }

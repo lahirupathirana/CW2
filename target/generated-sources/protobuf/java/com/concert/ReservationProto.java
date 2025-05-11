@@ -25,15 +25,15 @@ public final class ReservationProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_AddShowResponse_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ReserveRequest_descriptor;
+    internal_static_ReserveTicketRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_ReserveRequest_fieldAccessorTable;
+      internal_static_ReserveTicketRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ReserveResponse_descriptor;
+    internal_static_ReserveTicketResponse_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_ReserveResponse_fieldAccessorTable;
+      internal_static_ReserveTicketResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -43,15 +43,17 @@ public final class ReservationProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\021reservation.proto\"5\n\016AddShowRequest\022\020\n" +
-      "\010showName\030\001 \001(\t\022\021\n\tseatCount\030\002 \001(\005\"!\n\017Ad" +
-      "dShowResponse\022\016\n\006status\030\001 \001(\t\"\"\n\016Reserve" +
-      "Request\022\020\n\010showName\030\001 \001(\t\"!\n\017ReserveResp" +
-      "onse\022\016\n\006status\030\001 \001(\t2t\n\022ReservationServi" +
-      "ce\022,\n\007AddShow\022\017.AddShowRequest\032\020.AddShow" +
-      "Response\0220\n\013ReserveSeat\022\017.ReserveRequest" +
-      "\032\020.ReserveResponseB!\n\013com.concertB\020Reser" +
-      "vationProtoP\001b\006proto3"
+      "\n\021reservation.proto\"S\n\016AddShowRequest\022\020\n" +
+      "\010showName\030\001 \001(\t\022\024\n\014concertSeats\030\002 \001(\005\022\031\n" +
+      "\021afterPartyTickets\030\003 \001(\005\"!\n\017AddShowRespo" +
+      "nse\022\016\n\006status\030\001 \001(\t\"C\n\024ReserveTicketRequ" +
+      "est\022\020\n\010showName\030\001 \001(\t\022\031\n\021includeAfterPar" +
+      "ty\030\002 \001(\010\"\'\n\025ReserveTicketResponse\022\016\n\006sta" +
+      "tus\030\001 \001(\t2\202\001\n\022ReservationService\022,\n\007AddS" +
+      "how\022\017.AddShowRequest\032\020.AddShowResponse\022>" +
+      "\n\rReserveTicket\022\025.ReserveTicketRequest\032\026" +
+      ".ReserveTicketResponseB!\n\013com.concertB\020R" +
+      "eservationProtoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -62,24 +64,24 @@ public final class ReservationProto {
     internal_static_AddShowRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_AddShowRequest_descriptor,
-        new java.lang.String[] { "ShowName", "SeatCount", });
+        new java.lang.String[] { "ShowName", "ConcertSeats", "AfterPartyTickets", });
     internal_static_AddShowResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_AddShowResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_AddShowResponse_descriptor,
         new java.lang.String[] { "Status", });
-    internal_static_ReserveRequest_descriptor =
+    internal_static_ReserveTicketRequest_descriptor =
       getDescriptor().getMessageTypes().get(2);
-    internal_static_ReserveRequest_fieldAccessorTable = new
+    internal_static_ReserveTicketRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_ReserveRequest_descriptor,
-        new java.lang.String[] { "ShowName", });
-    internal_static_ReserveResponse_descriptor =
+        internal_static_ReserveTicketRequest_descriptor,
+        new java.lang.String[] { "ShowName", "IncludeAfterParty", });
+    internal_static_ReserveTicketResponse_descriptor =
       getDescriptor().getMessageTypes().get(3);
-    internal_static_ReserveResponse_fieldAccessorTable = new
+    internal_static_ReserveTicketResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_ReserveResponse_descriptor,
+        internal_static_ReserveTicketResponse_descriptor,
         new java.lang.String[] { "Status", });
   }
 

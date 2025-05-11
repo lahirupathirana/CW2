@@ -45,35 +45,35 @@ public final class ReservationServiceGrpc {
     return getAddShowMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.concert.ReserveRequest,
-      com.concert.ReserveResponse> getReserveSeatMethod;
+  private static volatile io.grpc.MethodDescriptor<com.concert.ReserveTicketRequest,
+      com.concert.ReserveTicketResponse> getReserveTicketMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "ReserveSeat",
-      requestType = com.concert.ReserveRequest.class,
-      responseType = com.concert.ReserveResponse.class,
+      fullMethodName = SERVICE_NAME + '/' + "ReserveTicket",
+      requestType = com.concert.ReserveTicketRequest.class,
+      responseType = com.concert.ReserveTicketResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.concert.ReserveRequest,
-      com.concert.ReserveResponse> getReserveSeatMethod() {
-    io.grpc.MethodDescriptor<com.concert.ReserveRequest, com.concert.ReserveResponse> getReserveSeatMethod;
-    if ((getReserveSeatMethod = ReservationServiceGrpc.getReserveSeatMethod) == null) {
+  public static io.grpc.MethodDescriptor<com.concert.ReserveTicketRequest,
+      com.concert.ReserveTicketResponse> getReserveTicketMethod() {
+    io.grpc.MethodDescriptor<com.concert.ReserveTicketRequest, com.concert.ReserveTicketResponse> getReserveTicketMethod;
+    if ((getReserveTicketMethod = ReservationServiceGrpc.getReserveTicketMethod) == null) {
       synchronized (ReservationServiceGrpc.class) {
-        if ((getReserveSeatMethod = ReservationServiceGrpc.getReserveSeatMethod) == null) {
-          ReservationServiceGrpc.getReserveSeatMethod = getReserveSeatMethod =
-              io.grpc.MethodDescriptor.<com.concert.ReserveRequest, com.concert.ReserveResponse>newBuilder()
+        if ((getReserveTicketMethod = ReservationServiceGrpc.getReserveTicketMethod) == null) {
+          ReservationServiceGrpc.getReserveTicketMethod = getReserveTicketMethod =
+              io.grpc.MethodDescriptor.<com.concert.ReserveTicketRequest, com.concert.ReserveTicketResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ReserveSeat"))
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ReserveTicket"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.concert.ReserveRequest.getDefaultInstance()))
+                  com.concert.ReserveTicketRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.concert.ReserveResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new ReservationServiceMethodDescriptorSupplier("ReserveSeat"))
+                  com.concert.ReserveTicketResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new ReservationServiceMethodDescriptorSupplier("ReserveTicket"))
               .build();
         }
       }
     }
-    return getReserveSeatMethod;
+    return getReserveTicketMethod;
   }
 
   /**
@@ -133,9 +133,9 @@ public final class ReservationServiceGrpc {
 
     /**
      */
-    public void reserveSeat(com.concert.ReserveRequest request,
-        io.grpc.stub.StreamObserver<com.concert.ReserveResponse> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getReserveSeatMethod(), responseObserver);
+    public void reserveTicket(com.concert.ReserveTicketRequest request,
+        io.grpc.stub.StreamObserver<com.concert.ReserveTicketResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getReserveTicketMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -148,12 +148,12 @@ public final class ReservationServiceGrpc {
                 com.concert.AddShowResponse>(
                   this, METHODID_ADD_SHOW)))
           .addMethod(
-            getReserveSeatMethod(),
+            getReserveTicketMethod(),
             io.grpc.stub.ServerCalls.asyncUnaryCall(
               new MethodHandlers<
-                com.concert.ReserveRequest,
-                com.concert.ReserveResponse>(
-                  this, METHODID_RESERVE_SEAT)))
+                com.concert.ReserveTicketRequest,
+                com.concert.ReserveTicketResponse>(
+                  this, METHODID_RESERVE_TICKET)))
           .build();
     }
   }
@@ -182,10 +182,10 @@ public final class ReservationServiceGrpc {
 
     /**
      */
-    public void reserveSeat(com.concert.ReserveRequest request,
-        io.grpc.stub.StreamObserver<com.concert.ReserveResponse> responseObserver) {
+    public void reserveTicket(com.concert.ReserveTicketRequest request,
+        io.grpc.stub.StreamObserver<com.concert.ReserveTicketResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getReserveSeatMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getReserveTicketMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -212,9 +212,9 @@ public final class ReservationServiceGrpc {
 
     /**
      */
-    public com.concert.ReserveResponse reserveSeat(com.concert.ReserveRequest request) {
+    public com.concert.ReserveTicketResponse reserveTicket(com.concert.ReserveTicketRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getReserveSeatMethod(), getCallOptions(), request);
+          getChannel(), getReserveTicketMethod(), getCallOptions(), request);
     }
   }
 
@@ -242,15 +242,15 @@ public final class ReservationServiceGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.concert.ReserveResponse> reserveSeat(
-        com.concert.ReserveRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<com.concert.ReserveTicketResponse> reserveTicket(
+        com.concert.ReserveTicketRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getReserveSeatMethod(), getCallOptions()), request);
+          getChannel().newCall(getReserveTicketMethod(), getCallOptions()), request);
     }
   }
 
   private static final int METHODID_ADD_SHOW = 0;
-  private static final int METHODID_RESERVE_SEAT = 1;
+  private static final int METHODID_RESERVE_TICKET = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -273,9 +273,9 @@ public final class ReservationServiceGrpc {
           serviceImpl.addShow((com.concert.AddShowRequest) request,
               (io.grpc.stub.StreamObserver<com.concert.AddShowResponse>) responseObserver);
           break;
-        case METHODID_RESERVE_SEAT:
-          serviceImpl.reserveSeat((com.concert.ReserveRequest) request,
-              (io.grpc.stub.StreamObserver<com.concert.ReserveResponse>) responseObserver);
+        case METHODID_RESERVE_TICKET:
+          serviceImpl.reserveTicket((com.concert.ReserveTicketRequest) request,
+              (io.grpc.stub.StreamObserver<com.concert.ReserveTicketResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -339,7 +339,7 @@ public final class ReservationServiceGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new ReservationServiceFileDescriptorSupplier())
               .addMethod(getAddShowMethod())
-              .addMethod(getReserveSeatMethod())
+              .addMethod(getReserveTicketMethod())
               .build();
         }
       }

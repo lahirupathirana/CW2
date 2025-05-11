@@ -20,8 +20,14 @@ public interface AddShowRequestOrBuilder extends
       getShowNameBytes();
 
   /**
-   * <code>int32 seatCount = 2;</code>
-   * @return The seatCount.
+   * <code>int32 concertSeats = 2;</code>
+   * @return The concertSeats.
    */
-  int getSeatCount();
+  int getConcertSeats();
+
+  /**
+   * <code>int32 afterPartyTickets = 3;</code>
+   * @return The afterPartyTickets.
+   */
+  int getAfterPartyTickets();
 }
