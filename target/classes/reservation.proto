@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.concert";
+option java_outer_classname = "ReservationProto";
+
+service ReservationService {
+  rpc AddShow(AddShowRequest) returns (AddShowResponse);
+  rpc ReserveSeat(ReserveRequest) returns (ReserveResponse);
+}
+
+message AddShowRequest {
+  string showName = 1;
+  int32 seatCount = 2;
+  
+}
+
+message AddShowResponse {
+  string status = 1;
+}
+
+message ReserveRequest {
+  string showName = 1;
+}
+
+message ReserveResponse {
+  string status = 1;
+}
