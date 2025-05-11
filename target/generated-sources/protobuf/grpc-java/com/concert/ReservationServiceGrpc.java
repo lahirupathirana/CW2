@@ -76,6 +76,37 @@ public final class ReservationServiceGrpc {
     return getReserveTicketMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.concert.ShowStatusRequest,
+      com.concert.ShowStatusResponse> getGetShowStatusMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "GetShowStatus",
+      requestType = com.concert.ShowStatusRequest.class,
+      responseType = com.concert.ShowStatusResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.concert.ShowStatusRequest,
+      com.concert.ShowStatusResponse> getGetShowStatusMethod() {
+    io.grpc.MethodDescriptor<com.concert.ShowStatusRequest, com.concert.ShowStatusResponse> getGetShowStatusMethod;
+    if ((getGetShowStatusMethod = ReservationServiceGrpc.getGetShowStatusMethod) == null) {
+      synchronized (ReservationServiceGrpc.class) {
+        if ((getGetShowStatusMethod = ReservationServiceGrpc.getGetShowStatusMethod) == null) {
+          ReservationServiceGrpc.getGetShowStatusMethod = getGetShowStatusMethod =
+              io.grpc.MethodDescriptor.<com.concert.ShowStatusRequest, com.concert.ShowStatusResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetShowStatus"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.concert.ShowStatusRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.concert.ShowStatusResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new ReservationServiceMethodDescriptorSupplier("GetShowStatus"))
+              .build();
+        }
+      }
+    }
+    return getGetShowStatusMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -138,6 +169,13 @@ public final class ReservationServiceGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getReserveTicketMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void getShowStatus(com.concert.ShowStatusRequest request,
+        io.grpc.stub.StreamObserver<com.concert.ShowStatusResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetShowStatusMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -154,6 +192,13 @@ public final class ReservationServiceGrpc {
                 com.concert.ReserveTicketRequest,
                 com.concert.ReserveTicketResponse>(
                   this, METHODID_RESERVE_TICKET)))
+          .addMethod(
+            getGetShowStatusMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                com.concert.ShowStatusRequest,
+                com.concert.ShowStatusResponse>(
+                  this, METHODID_GET_SHOW_STATUS)))
           .build();
     }
   }
@@ -187,6 +232,14 @@ public final class ReservationServiceGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getReserveTicketMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void getShowStatus(com.concert.ShowStatusRequest request,
+        io.grpc.stub.StreamObserver<com.concert.ShowStatusResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getGetShowStatusMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -215,6 +268,13 @@ public final class ReservationServiceGrpc {
     public com.concert.ReserveTicketResponse reserveTicket(com.concert.ReserveTicketRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getReserveTicketMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.concert.ShowStatusResponse getShowStatus(com.concert.ShowStatusRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetShowStatusMethod(), getCallOptions(), request);
     }
   }
 
@@ -247,10 +307,19 @@ public final class ReservationServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getReserveTicketMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.concert.ShowStatusResponse> getShowStatus(
+        com.concert.ShowStatusRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getGetShowStatusMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_ADD_SHOW = 0;
   private static final int METHODID_RESERVE_TICKET = 1;
+  private static final int METHODID_GET_SHOW_STATUS = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -276,6 +345,10 @@ public final class ReservationServiceGrpc {
         case METHODID_RESERVE_TICKET:
           serviceImpl.reserveTicket((com.concert.ReserveTicketRequest) request,
               (io.grpc.stub.StreamObserver<com.concert.ReserveTicketResponse>) responseObserver);
+          break;
+        case METHODID_GET_SHOW_STATUS:
+          serviceImpl.getShowStatus((com.concert.ShowStatusRequest) request,
+              (io.grpc.stub.StreamObserver<com.concert.ShowStatusResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -340,6 +413,7 @@ public final class ReservationServiceGrpc {
               .setSchemaDescriptor(new ReservationServiceFileDescriptorSupplier())
               .addMethod(getAddShowMethod())
               .addMethod(getReserveTicketMethod())
+              .addMethod(getGetShowStatusMethod())
               .build();
         }
       }

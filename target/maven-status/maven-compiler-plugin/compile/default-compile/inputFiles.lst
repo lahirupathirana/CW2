@@ -1,3 +1,5 @@
+D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\src\main\java\com\concert\AddShowClient.java
+D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\src\main\java\com\concert\BuyTicketClient.java
 D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\src\main\java\com\concert\ReservationClient.java
 D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\src\main\java\com\concert\ReservationServer.java
 D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\src\main\java\com\concert\ReservationServiceImpl.java
@@ -11,3 +13,7 @@ D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\target\generated-sources\pro
 D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\target\generated-sources\protobuf\java\com\concert\ReserveTicketRequestOrBuilder.java
 D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\target\generated-sources\protobuf\java\com\concert\ReserveTicketResponse.java
 D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\target\generated-sources\protobuf\java\com\concert\ReserveTicketResponseOrBuilder.java
+D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\target\generated-sources\protobuf\java\com\concert\ShowStatusRequest.java
+D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\target\generated-sources\protobuf\java\com\concert\ShowStatusRequestOrBuilder.java
+D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\target\generated-sources\protobuf\java\com\concert\ShowStatusResponse.java
+D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\target\generated-sources\protobuf\java\com\concert\ShowStatusResponseOrBuilder.java

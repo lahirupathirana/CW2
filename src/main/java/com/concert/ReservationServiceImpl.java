@@ -7,6 +7,7 @@ import java.util.Map;
 public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationServiceImplBase {
 
     static class Show {
+
         int concertSeats;
         int afterPartyTickets;
 
@@ -58,6 +59,23 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
 
         ReserveTicketResponse response = ReserveTicketResponse.newBuilder()
                 .setStatus(status)
+                .build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getShowStatus(ShowStatusRequest request, StreamObserver<ShowStatusResponse> responseObserver) {
+        Show show = shows.get(request.getShowName());
+
+        if (show == null) {
+            show = new Show(0, 0); // handle missing show
+        }
+
+        ShowStatusResponse response = ShowStatusResponse.newBuilder()
+                .setConcertSeats(show.concertSeats)
+                .setAfterPartyTickets(show.afterPartyTickets)
                 .build();
 
         responseObserver.onNext(response);
