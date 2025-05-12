@@ -9,6 +9,7 @@ com\concert\AddShowResponseOrBuilder.class
 com\concert\BuyTicketClient.class
 com\concert\ReservationServiceGrpc$ReservationServiceFutureStub.class
 com\concert\ReservationClient.class
+com\concert\ZooKeeperClient.class
 com\concert\ReservationServiceGrpc$1.class
 com\concert\ReserveTicketResponse$1.class
 com\concert\ShowStatusResponseOrBuilder.class
@@ -28,6 +29,7 @@ com\concert\ReserveTicketRequest$1.class
 com\concert\ReservationServer.class
 com\concert\AddShowRequest$1.class
 com\concert\AddShowResponse.class
+com\concert\DistributedLock.class
 com\concert\AddShowResponse$Builder.class
 com\concert\ReservationProto.class
 com\concert\ReserveTicketResponse$Builder.class

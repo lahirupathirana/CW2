@@ -1,13 +1,16 @@
 package com.concert;
 
-import io.grpc.stub.StreamObserver;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.grpc.stub.StreamObserver;
+
 public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationServiceImplBase {
 
-    static class Show {
+    // Shared static flag to indicate leader status
+    public static boolean isLeader = false;
 
+    static class Show {
         int concertSeats;
         int afterPartyTickets;
 
@@ -21,17 +24,35 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
 
     @Override
     public void addShow(AddShowRequest request, StreamObserver<AddShowResponse> responseObserver) {
-        shows.put(request.getShowName(), new Show(request.getConcertSeats(), request.getAfterPartyTickets()));
+        if (!isLeader) {
+            responseObserver.onNext(AddShowResponse.newBuilder()
+                    .setStatus("❌ This server is not the leader. Cannot add shows.")
+                    .build());
+            responseObserver.onCompleted();
+            return;
+        }
 
-        AddShowResponse response = AddShowResponse.newBuilder()
-                .setStatus("Show added: " + request.getShowName())
-                .build();
-        responseObserver.onNext(response);
+        shows.put(request.getShowName(), new Show(
+                request.getConcertSeats(),
+                request.getAfterPartyTickets()
+        ));
+
+        responseObserver.onNext(AddShowResponse.newBuilder()
+                .setStatus("✅ Show added by leader.")
+                .build());
         responseObserver.onCompleted();
     }
 
     @Override
     public void reserveTicket(ReserveTicketRequest request, StreamObserver<ReserveTicketResponse> responseObserver) {
+        if (!isLeader) {
+            responseObserver.onNext(ReserveTicketResponse.newBuilder()
+                    .setStatus("❌ This server is not the leader. Cannot process reservations.")
+                    .build());
+            responseObserver.onCompleted();
+            return;
+        }
+
         Show show = shows.get(request.getShowName());
 
         String status;
@@ -43,25 +64,23 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
                 if (show.concertSeats > 0 && show.afterPartyTickets > 0) {
                     show.concertSeats--;
                     show.afterPartyTickets--;
-                    status = "Combo reserved: concert + after-party";
+                    status = "✅ Combo reserved (concert + after-party)";
                 } else {
-                    status = "Booking failed: not enough tickets for combo.";
+                    status = "❌ Not enough tickets for combo.";
                 }
             } else {
                 if (show.concertSeats > 0) {
                     show.concertSeats--;
-                    status = "Concert ticket reserved.";
+                    status = "✅ Concert ticket reserved.";
                 } else {
-                    status = "Concert sold out.";
+                    status = "❌ Concert sold out.";
                 }
             }
         }
 
-        ReserveTicketResponse response = ReserveTicketResponse.newBuilder()
+        responseObserver.onNext(ReserveTicketResponse.newBuilder()
                 .setStatus(status)
-                .build();
-
-        responseObserver.onNext(response);
+                .build());
         responseObserver.onCompleted();
     }
 
@@ -69,16 +88,17 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
     public void getShowStatus(ShowStatusRequest request, StreamObserver<ShowStatusResponse> responseObserver) {
         Show show = shows.get(request.getShowName());
 
-        if (show == null) {
-            show = new Show(0, 0); // handle missing show
+        int concert = 0, afterParty = 0;
+
+        if (show != null) {
+            concert = show.concertSeats;
+            afterParty = show.afterPartyTickets;
         }
 
-        ShowStatusResponse response = ShowStatusResponse.newBuilder()
-                .setConcertSeats(show.concertSeats)
-                .setAfterPartyTickets(show.afterPartyTickets)
-                .build();
-
-        responseObserver.onNext(response);
+        responseObserver.onNext(ShowStatusResponse.newBuilder()
+                .setConcertSeats(concert)
+                .setAfterPartyTickets(afterParty)
+                .build());
         responseObserver.onCompleted();
     }
 }
