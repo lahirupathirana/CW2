@@ -107,6 +107,37 @@ public final class ReservationServiceGrpc {
     return getGetShowStatusMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.concert.UpdateRequest,
+      com.concert.UpdateResponse> getSyncUpdateMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "SyncUpdate",
+      requestType = com.concert.UpdateRequest.class,
+      responseType = com.concert.UpdateResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.concert.UpdateRequest,
+      com.concert.UpdateResponse> getSyncUpdateMethod() {
+    io.grpc.MethodDescriptor<com.concert.UpdateRequest, com.concert.UpdateResponse> getSyncUpdateMethod;
+    if ((getSyncUpdateMethod = ReservationServiceGrpc.getSyncUpdateMethod) == null) {
+      synchronized (ReservationServiceGrpc.class) {
+        if ((getSyncUpdateMethod = ReservationServiceGrpc.getSyncUpdateMethod) == null) {
+          ReservationServiceGrpc.getSyncUpdateMethod = getSyncUpdateMethod =
+              io.grpc.MethodDescriptor.<com.concert.UpdateRequest, com.concert.UpdateResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SyncUpdate"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.concert.UpdateRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.concert.UpdateResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new ReservationServiceMethodDescriptorSupplier("SyncUpdate"))
+              .build();
+        }
+      }
+    }
+    return getSyncUpdateMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -176,6 +207,13 @@ public final class ReservationServiceGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetShowStatusMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void syncUpdate(com.concert.UpdateRequest request,
+        io.grpc.stub.StreamObserver<com.concert.UpdateResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSyncUpdateMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -199,6 +237,13 @@ public final class ReservationServiceGrpc {
                 com.concert.ShowStatusRequest,
                 com.concert.ShowStatusResponse>(
                   this, METHODID_GET_SHOW_STATUS)))
+          .addMethod(
+            getSyncUpdateMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                com.concert.UpdateRequest,
+                com.concert.UpdateResponse>(
+                  this, METHODID_SYNC_UPDATE)))
           .build();
     }
   }
@@ -240,6 +285,14 @@ public final class ReservationServiceGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getGetShowStatusMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void syncUpdate(com.concert.UpdateRequest request,
+        io.grpc.stub.StreamObserver<com.concert.UpdateResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getSyncUpdateMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -275,6 +328,13 @@ public final class ReservationServiceGrpc {
     public com.concert.ShowStatusResponse getShowStatus(com.concert.ShowStatusRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetShowStatusMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.concert.UpdateResponse syncUpdate(com.concert.UpdateRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getSyncUpdateMethod(), getCallOptions(), request);
     }
   }
 
@@ -315,11 +375,20 @@ public final class ReservationServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetShowStatusMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.concert.UpdateResponse> syncUpdate(
+        com.concert.UpdateRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getSyncUpdateMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_ADD_SHOW = 0;
   private static final int METHODID_RESERVE_TICKET = 1;
   private static final int METHODID_GET_SHOW_STATUS = 2;
+  private static final int METHODID_SYNC_UPDATE = 3;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -349,6 +418,10 @@ public final class ReservationServiceGrpc {
         case METHODID_GET_SHOW_STATUS:
           serviceImpl.getShowStatus((com.concert.ShowStatusRequest) request,
               (io.grpc.stub.StreamObserver<com.concert.ShowStatusResponse>) responseObserver);
+          break;
+        case METHODID_SYNC_UPDATE:
+          serviceImpl.syncUpdate((com.concert.UpdateRequest) request,
+              (io.grpc.stub.StreamObserver<com.concert.UpdateResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -414,6 +487,7 @@ public final class ReservationServiceGrpc {
               .addMethod(getAddShowMethod())
               .addMethod(getReserveTicketMethod())
               .addMethod(getGetShowStatusMethod())
+              .addMethod(getSyncUpdateMethod())
               .build();
         }
       }

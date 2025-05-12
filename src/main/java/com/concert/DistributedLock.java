@@ -17,8 +17,8 @@ public class DistributedLock {
         this.zkClient = new ZooKeeperClient(hostPort);
     }
 
-    public void acquireLock(String nodeId) throws Exception {
-        // ✅ Step 1: Ensure /locks node exists
+    public void acquireLock(String nodeId, int port) throws Exception {
+        // Ensure /locks node exists
         if (zkClient.getZooKeeper().exists(lockBasePath, false) == null) {
             zkClient.getZooKeeper().create(
                     lockBasePath,
@@ -26,29 +26,37 @@ public class DistributedLock {
                     ZooDefs.Ids.OPEN_ACL_UNSAFE,
                     CreateMode.PERSISTENT
             );
-            System.out.println("🛠️ Created ZooKeeper base path: " + lockBasePath);
         }
 
-        // ✅ Step 2: Now create sequential ephemeral lock node under /locks
+        // Create ephemeral sequential node
         String fullPath = zkClient.createEphemeralSequential(lockBasePath + "/lock_", nodeId.getBytes());
         this.lockNodePath = fullPath;
-        System.out.println("🔐 Created ephemeral lock node: " + fullPath);
 
-        // ✅ Step 3: Wait until we’re the smallest (leader)
-        while (true) {
-            List<String> nodes = zkClient.getZooKeeper().getChildren(lockBasePath, false);
-            Collections.sort(nodes);
+        System.out.println("🟡 Server starting as follower on port " + port + "...");
 
-            String smallestNode = nodes.get(0);
+        new Thread(() -> {
+            try {
+                while (true) {
+                    List<String> nodes = zkClient.getZooKeeper().getChildren(lockBasePath, false);
+                    Collections.sort(nodes);
+                    String smallestNode = nodes.get(0);
+                    String myNode = fullPath.substring(fullPath.lastIndexOf('/') + 1);
 
-            if ((lockBasePath + "/" + smallestNode).equals(fullPath)) {
-                System.out.println("✅ " + nodeId + " acquired leadership!");
-                break;
-            } else {
-                // System.out.println("⏳ " + nodeId + " waiting for leadership...");
-                Thread.sleep(1000);
+                    if (smallestNode.equals(myNode)) {
+                        if (!ReservationServiceImpl.isLeader) {
+                            ReservationServiceImpl.isLeader = true;
+                            System.out.println("🔺 Server on port " + port + " is now the LEADER");
+                        }
+                        break;
+                    } else {
+                        ReservationServiceImpl.isLeader = false;
+                        Thread.sleep(1000);
+                    }
+                }
+            } catch (Exception e) {
+                System.err.println("Error in leader election thread: " + e.getMessage());
             }
-        }
+        }).start();
     }
 
     public void releaseLock() throws Exception {
