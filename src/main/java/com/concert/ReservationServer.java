@@ -12,13 +12,19 @@ public class ReservationServer {
         }
 
         int port = Integer.parseInt(args[0]);
+
         System.out.println("🟢 Starting ReservationServer on port " + port);
 
         // Connect to ZooKeeper and run leader election
         DistributedLock lock = new DistributedLock("localhost:2181");
         lock.acquireLock("Node-" + port, port);  // port passed for logging
-
+        // boolean isLeader = lock.acquireLock();
         // Start gRPC server
+        int wait = 0;
+        while (!ReservationServiceImpl.isLeader && wait < 5) {
+            Thread.sleep(500);
+            wait++;
+        }
         ReservationServiceImpl service = new ReservationServiceImpl(port);
         Server server = ServerBuilder
                 .forPort(port)
@@ -27,6 +33,10 @@ public class ReservationServer {
 
         server.start();
         System.out.println("✅ Reservation gRPC server active on port " + port);
+        // ReservationServiceImpl service = new ReservationServiceImpl(port, isLeader);
+        if (!ReservationServiceImpl.isLeader) {
+            service.syncFromLeader();
+        }
         server.awaitTermination();
     }
 }

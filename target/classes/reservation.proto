@@ -9,6 +9,7 @@ service ReservationService {
   rpc ReserveTicket(ReserveTicketRequest) returns (ReserveTicketResponse);
   rpc GetShowStatus(ShowStatusRequest) returns (ShowStatusResponse);
   rpc SyncUpdate(UpdateRequest) returns (UpdateResponse);
+  rpc syncAll(SyncRequest) returns (SyncResponse);
 }
 
 message AddShowRequest {
@@ -48,4 +49,17 @@ message UpdateRequest {
 
 message UpdateResponse {
   string status = 1;
+}
+message SyncRequest {
+  string requestor = 1;
+}
+
+message ShowData {
+  string showName = 1;
+  int32 concertSeats = 2;
+  int32 afterPartyTickets = 3;
+}
+
+message SyncResponse {
+  repeated ShowData shows = 1;
 }

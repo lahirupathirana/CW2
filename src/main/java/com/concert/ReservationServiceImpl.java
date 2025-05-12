@@ -5,6 +5,9 @@ import java.util.Map;
 
 import io.grpc.stub.StreamObserver;
 
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+
 public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationServiceImplBase {
 
     public static boolean isLeader = false;
@@ -157,4 +160,51 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
                 .build());
         responseObserver.onCompleted();
     }
+
+    @Override
+    public void syncAll(SyncRequest request, StreamObserver<SyncResponse> responseObserver) {
+        SyncResponse.Builder builder = SyncResponse.newBuilder();
+
+        for (Map.Entry<String, Show> entry : shows.entrySet()) {
+            builder.addShows(
+                    ShowData.newBuilder()
+                            .setShowName(entry.getKey())
+                            .setConcertSeats(entry.getValue().concertSeats)
+                            .setAfterPartyTickets(entry.getValue().afterPartyTickets)
+                            .build()
+            );
+        }
+
+        responseObserver.onNext(builder.build());
+        responseObserver.onCompleted();
+    }
+
+    public void syncFromLeader() {
+        if (!isLeader) {
+            try {
+                System.out.println("🔄 Syncing from leader...");
+                ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
+                        .usePlaintext().build();
+
+                ReservationServiceGrpc.ReservationServiceBlockingStub stub
+                        = ReservationServiceGrpc.newBlockingStub(channel);
+
+                SyncRequest request = SyncRequest.newBuilder()
+                        .setRequestor("Follower-" + currentPort).build();
+
+                SyncResponse response = stub.syncAll(request);
+
+                for (ShowData show : response.getShowsList()) {
+                    shows.put(show.getShowName(),
+                            new Show(show.getConcertSeats(), show.getAfterPartyTickets()));
+                    System.out.println("🟢 Synced: " + show.getShowName());
+                }
+
+                channel.shutdown();
+            } catch (Exception e) {
+                System.err.println("❌ Failed to sync: " + e.getMessage());
+            }
+        }
+    }
+
 }
