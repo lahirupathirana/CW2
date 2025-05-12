@@ -1,9 +1,9 @@
 package com.concert;
 
-import io.grpc.stub.StreamObserver;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import io.grpc.stub.StreamObserver;
 
 public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationServiceImplBase {
 
@@ -15,6 +15,7 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
     }
 
     static class Show {
+
         int concertSeats;
         int afterPartyTickets;
 
@@ -41,8 +42,18 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
                 request.getAfterPartyTickets()
         ));
 
+        System.out.println("🎫 [Leader " + currentPort + "] added new event '"
+                + request.getShowName() + "' with "
+                + request.getConcertSeats() + " concert seats and "
+                + request.getAfterPartyTickets() + " after-party tickets.");
+
+        // ✅ Sync new show to all followers
+        syncToFollowers(request.getShowName(),
+                request.getConcertSeats(),
+                request.getAfterPartyTickets());
+
         responseObserver.onNext(AddShowResponse.newBuilder()
-                .setStatus("✅ Show added by leader on port " + currentPort)
+                .setStatus("✅ Show added and synced by leader on port " + currentPort)
                 .build());
         responseObserver.onCompleted();
     }
@@ -97,9 +108,9 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
         int[] followerPorts = {9091, 9092};
         for (int p : followerPorts) {
             if (p != currentPort) {
-                System.out.println("➡️ Leader on port " + currentPort +
-                        " sending update to follower on port " + p +
-                        " [Show: " + showName + "]");
+                System.out.println("➡️ Leader on port " + currentPort
+                        + " sending update to follower on port " + p
+                        + " [Show: " + showName + "]");
                 new FollowerSyncClient("localhost", p)
                         .sendSync(showName, seats, afters, "leader-" + currentPort);
             }
@@ -115,10 +126,10 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
             ));
         }
 
-        String msg = "🟡 [Follower Port " + currentPort + "] updated show '" +
-                request.getShowName() + "' from leader " + request.getSource() +
-                " => Seats: " + request.getConcertSeats() +
-                ", AfterParty: " + request.getAfterPartyTickets();
+        String msg = "🟡 [Follower Port " + currentPort + "] updated show '"
+                + request.getShowName() + "' from leader " + request.getSource()
+                + " => Seats: " + request.getConcertSeats()
+                + ", AfterParty: " + request.getAfterPartyTickets();
 
         System.out.println("==============================================");
         System.out.println(msg);

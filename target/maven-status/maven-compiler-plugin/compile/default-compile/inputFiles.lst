@@ -1,6 +1,7 @@
 D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\src\main\java\com\concert\AddShowClient.java
 D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\src\main\java\com\concert\BuyTicketClient.java
 D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\src\main\java\com\concert\DistributedLock.java
+D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\src\main\java\com\concert\EventStatusClient.java
 D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\src\main\java\com\concert\FollowerSyncClient.java
 D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\src\main\java\com\concert\ReservationClient.java
 D:\MSC\Lecture\Concuruntand distributa\CW2\CODE\CW2\src\main\java\com\concert\ReservationServer.java
