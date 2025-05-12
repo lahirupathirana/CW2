@@ -1,20 +1,19 @@
 package com.concert;
 
 import io.grpc.stub.StreamObserver;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationServiceImplBase {
 
-    public static boolean isLeader = false;  // Updated by DistributedLock
+    public static boolean isLeader = false;
     private final int currentPort;
 
-    // Constructor receives port from ReservationServer
     public ReservationServiceImpl(int port) {
         this.currentPort = port;
     }
 
-    // Inner class to hold ticket info
     static class Show {
         int concertSeats;
         int afterPartyTickets;
@@ -27,7 +26,6 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
 
     private final Map<String, Show> shows = new HashMap<>();
 
-    // Client -> Add a show
     @Override
     public void addShow(AddShowRequest request, StreamObserver<AddShowResponse> responseObserver) {
         if (!isLeader) {
@@ -49,7 +47,6 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
         responseObserver.onCompleted();
     }
 
-    // Client -> Reserve a ticket
     @Override
     public void reserveTicket(ReserveTicketRequest request, StreamObserver<ReserveTicketResponse> responseObserver) {
         if (!isLeader) {
@@ -64,7 +61,7 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
         Show show = shows.get(request.getShowName());
 
         if (show == null) {
-            status = "Show not found.";
+            status = "❌ Show not found.";
         } else {
             synchronized (this) {
                 if (request.getIncludeAfterParty()) {
@@ -96,33 +93,43 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
         responseObserver.onCompleted();
     }
 
-    // Internal: Sync update to all known follower ports
     private void syncToFollowers(String showName, int seats, int afters) {
         int[] followerPorts = {9091, 9092};
         for (int p : followerPorts) {
             if (p != currentPort) {
+                System.out.println("➡️ Leader on port " + currentPort +
+                        " sending update to follower on port " + p +
+                        " [Show: " + showName + "]");
                 new FollowerSyncClient("localhost", p)
                         .sendSync(showName, seats, afters, "leader-" + currentPort);
             }
         }
     }
 
-    // Follower -> Apply update from leader
     @Override
     public void syncUpdate(UpdateRequest request, StreamObserver<UpdateResponse> responseObserver) {
-        shows.put(request.getShowName(), new Show(
-                request.getConcertSeats(),
-                request.getAfterPartyTickets()
-        ));
+        synchronized (this) {
+            shows.put(request.getShowName(), new Show(
+                    request.getConcertSeats(),
+                    request.getAfterPartyTickets()
+            ));
+        }
 
-        String msg = "🟡 Follower " + currentPort + " updated by leader: " + request.getSource();
+        String msg = "🟡 [Follower Port " + currentPort + "] updated show '" +
+                request.getShowName() + "' from leader " + request.getSource() +
+                " => Seats: " + request.getConcertSeats() +
+                ", AfterParty: " + request.getAfterPartyTickets();
+
+        System.out.println("==============================================");
         System.out.println(msg);
+        System.out.println("==============================================");
 
-        responseObserver.onNext(UpdateResponse.newBuilder().setStatus(msg).build());
+        responseObserver.onNext(UpdateResponse.newBuilder()
+                .setStatus("Follower " + currentPort + " successfully updated.")
+                .build());
         responseObserver.onCompleted();
     }
 
-    // Client -> Get show ticket counts
     @Override
     public void getShowStatus(ShowStatusRequest request, StreamObserver<ShowStatusResponse> responseObserver) {
         Show show = shows.get(request.getShowName());
