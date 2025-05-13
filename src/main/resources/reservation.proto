@@ -10,6 +10,9 @@ service ReservationService {
   rpc GetShowStatus(ShowStatusRequest) returns (ShowStatusResponse);
   rpc SyncUpdate(UpdateRequest) returns (UpdateResponse);
   rpc syncAll(SyncRequest) returns (SyncResponse);
+  rpc Prepare(PrepareRequest) returns (PrepareResponse);
+  rpc Commit(CommitRequest) returns (Ack);
+  rpc Abort(AbortRequest) returns (Ack);
 }
 
 message AddShowRequest {
@@ -62,4 +65,29 @@ message ShowData {
 
 message SyncResponse {
   repeated ShowData shows = 1;
+}
+message PrepareRequest {
+  string transactionId = 1;
+  string showName = 2;
+  int32 ticketCount = 3;
+  bool needAfterParty = 4;
+}
+
+message PrepareResponse {
+  bool voteCommit = 1;
+}
+
+// ==== Phase 2: Commit/Abort ====
+message CommitRequest {
+  string transactionId = 1;
+  string showName = 2;
+}
+
+message AbortRequest {
+  string transactionId = 1;
+  string showName = 2;
+}
+
+message Ack {
+  string status = 1;
 }

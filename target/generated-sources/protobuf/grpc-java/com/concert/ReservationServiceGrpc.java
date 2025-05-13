@@ -169,6 +169,99 @@ public final class ReservationServiceGrpc {
     return getSyncAllMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.concert.PrepareRequest,
+      com.concert.PrepareResponse> getPrepareMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "Prepare",
+      requestType = com.concert.PrepareRequest.class,
+      responseType = com.concert.PrepareResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.concert.PrepareRequest,
+      com.concert.PrepareResponse> getPrepareMethod() {
+    io.grpc.MethodDescriptor<com.concert.PrepareRequest, com.concert.PrepareResponse> getPrepareMethod;
+    if ((getPrepareMethod = ReservationServiceGrpc.getPrepareMethod) == null) {
+      synchronized (ReservationServiceGrpc.class) {
+        if ((getPrepareMethod = ReservationServiceGrpc.getPrepareMethod) == null) {
+          ReservationServiceGrpc.getPrepareMethod = getPrepareMethod =
+              io.grpc.MethodDescriptor.<com.concert.PrepareRequest, com.concert.PrepareResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "Prepare"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.concert.PrepareRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.concert.PrepareResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new ReservationServiceMethodDescriptorSupplier("Prepare"))
+              .build();
+        }
+      }
+    }
+    return getPrepareMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.concert.CommitRequest,
+      com.concert.Ack> getCommitMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "Commit",
+      requestType = com.concert.CommitRequest.class,
+      responseType = com.concert.Ack.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.concert.CommitRequest,
+      com.concert.Ack> getCommitMethod() {
+    io.grpc.MethodDescriptor<com.concert.CommitRequest, com.concert.Ack> getCommitMethod;
+    if ((getCommitMethod = ReservationServiceGrpc.getCommitMethod) == null) {
+      synchronized (ReservationServiceGrpc.class) {
+        if ((getCommitMethod = ReservationServiceGrpc.getCommitMethod) == null) {
+          ReservationServiceGrpc.getCommitMethod = getCommitMethod =
+              io.grpc.MethodDescriptor.<com.concert.CommitRequest, com.concert.Ack>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "Commit"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.concert.CommitRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.concert.Ack.getDefaultInstance()))
+              .setSchemaDescriptor(new ReservationServiceMethodDescriptorSupplier("Commit"))
+              .build();
+        }
+      }
+    }
+    return getCommitMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.concert.AbortRequest,
+      com.concert.Ack> getAbortMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "Abort",
+      requestType = com.concert.AbortRequest.class,
+      responseType = com.concert.Ack.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.concert.AbortRequest,
+      com.concert.Ack> getAbortMethod() {
+    io.grpc.MethodDescriptor<com.concert.AbortRequest, com.concert.Ack> getAbortMethod;
+    if ((getAbortMethod = ReservationServiceGrpc.getAbortMethod) == null) {
+      synchronized (ReservationServiceGrpc.class) {
+        if ((getAbortMethod = ReservationServiceGrpc.getAbortMethod) == null) {
+          ReservationServiceGrpc.getAbortMethod = getAbortMethod =
+              io.grpc.MethodDescriptor.<com.concert.AbortRequest, com.concert.Ack>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "Abort"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.concert.AbortRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.concert.Ack.getDefaultInstance()))
+              .setSchemaDescriptor(new ReservationServiceMethodDescriptorSupplier("Abort"))
+              .build();
+        }
+      }
+    }
+    return getAbortMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -252,6 +345,27 @@ public final class ReservationServiceGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSyncAllMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void prepare(com.concert.PrepareRequest request,
+        io.grpc.stub.StreamObserver<com.concert.PrepareResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getPrepareMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void commit(com.concert.CommitRequest request,
+        io.grpc.stub.StreamObserver<com.concert.Ack> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getCommitMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void abort(com.concert.AbortRequest request,
+        io.grpc.stub.StreamObserver<com.concert.Ack> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getAbortMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -289,6 +403,27 @@ public final class ReservationServiceGrpc {
                 com.concert.SyncRequest,
                 com.concert.SyncResponse>(
                   this, METHODID_SYNC_ALL)))
+          .addMethod(
+            getPrepareMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                com.concert.PrepareRequest,
+                com.concert.PrepareResponse>(
+                  this, METHODID_PREPARE)))
+          .addMethod(
+            getCommitMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                com.concert.CommitRequest,
+                com.concert.Ack>(
+                  this, METHODID_COMMIT)))
+          .addMethod(
+            getAbortMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                com.concert.AbortRequest,
+                com.concert.Ack>(
+                  this, METHODID_ABORT)))
           .build();
     }
   }
@@ -346,6 +481,30 @@ public final class ReservationServiceGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getSyncAllMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void prepare(com.concert.PrepareRequest request,
+        io.grpc.stub.StreamObserver<com.concert.PrepareResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getPrepareMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void commit(com.concert.CommitRequest request,
+        io.grpc.stub.StreamObserver<com.concert.Ack> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getCommitMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void abort(com.concert.AbortRequest request,
+        io.grpc.stub.StreamObserver<com.concert.Ack> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getAbortMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -395,6 +554,27 @@ public final class ReservationServiceGrpc {
     public com.concert.SyncResponse syncAll(com.concert.SyncRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getSyncAllMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.concert.PrepareResponse prepare(com.concert.PrepareRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getPrepareMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.concert.Ack commit(com.concert.CommitRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getCommitMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.concert.Ack abort(com.concert.AbortRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getAbortMethod(), getCallOptions(), request);
     }
   }
 
@@ -451,6 +631,30 @@ public final class ReservationServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getSyncAllMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.concert.PrepareResponse> prepare(
+        com.concert.PrepareRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getPrepareMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.concert.Ack> commit(
+        com.concert.CommitRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getCommitMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.concert.Ack> abort(
+        com.concert.AbortRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getAbortMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_ADD_SHOW = 0;
@@ -458,6 +662,9 @@ public final class ReservationServiceGrpc {
   private static final int METHODID_GET_SHOW_STATUS = 2;
   private static final int METHODID_SYNC_UPDATE = 3;
   private static final int METHODID_SYNC_ALL = 4;
+  private static final int METHODID_PREPARE = 5;
+  private static final int METHODID_COMMIT = 6;
+  private static final int METHODID_ABORT = 7;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -495,6 +702,18 @@ public final class ReservationServiceGrpc {
         case METHODID_SYNC_ALL:
           serviceImpl.syncAll((com.concert.SyncRequest) request,
               (io.grpc.stub.StreamObserver<com.concert.SyncResponse>) responseObserver);
+          break;
+        case METHODID_PREPARE:
+          serviceImpl.prepare((com.concert.PrepareRequest) request,
+              (io.grpc.stub.StreamObserver<com.concert.PrepareResponse>) responseObserver);
+          break;
+        case METHODID_COMMIT:
+          serviceImpl.commit((com.concert.CommitRequest) request,
+              (io.grpc.stub.StreamObserver<com.concert.Ack>) responseObserver);
+          break;
+        case METHODID_ABORT:
+          serviceImpl.abort((com.concert.AbortRequest) request,
+              (io.grpc.stub.StreamObserver<com.concert.Ack>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -562,6 +781,9 @@ public final class ReservationServiceGrpc {
               .addMethod(getGetShowStatusMethod())
               .addMethod(getSyncUpdateMethod())
               .addMethod(getSyncAllMethod())
+              .addMethod(getPrepareMethod())
+              .addMethod(getCommitMethod())
+              .addMethod(getAbortMethod())
               .build();
         }
       }

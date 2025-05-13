@@ -12,6 +12,20 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
 
     public static boolean isLeader = false;
     private final int currentPort;
+    private final Map<String, PendingReservation> pending = new HashMap<>();
+
+    static class PendingReservation {
+
+        String showName;
+        int ticketCount;
+        boolean withAfterParty;
+
+        PendingReservation(String showName, int count, boolean party) {
+            this.showName = showName;
+            this.ticketCount = count;
+            this.withAfterParty = party;
+        }
+    }
 
     public ReservationServiceImpl(int port) {
         this.currentPort = port;
@@ -206,5 +220,46 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
             }
         }
     }
+
+    @Override
+    public void prepare(PrepareRequest request, StreamObserver<PrepareResponse> responseObserver) {
+        Show show = shows.get(request.getShowName());
+
+        boolean canCommit = false;
+        if (show != null && show.concertSeats >= request.getTicketCount()) {
+            if (!request.getNeedAfterParty() || show.afterPartyTickets >= request.getTicketCount()) {
+                canCommit = true;
+                pending.put(request.getTransactionId(), new PendingReservation(
+                        request.getShowName(), request.getTicketCount(), request.getNeedAfterParty()
+                ));
+            }
+        }
+
+        responseObserver.onNext(PrepareResponse.newBuilder().setVoteCommit(canCommit).build());
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void commit(CommitRequest request, StreamObserver<Ack> responseObserver) {
+        PendingReservation res = pending.remove(request.getTransactionId());
+        if (res != null) {
+            Show show = shows.get(res.showName);
+            show.concertSeats -= res.ticketCount;
+            if (res.withAfterParty) {
+                show.afterPartyTickets -= res.ticketCount;
+            }
+            System.out.println("✅ Commit completed on " + currentPort + " for " + res.showName);
+        }
+
+        responseObserver.onNext(Ack.newBuilder().setStatus("committed").build());
+        responseObserver.onCompleted();
+    }
+    @Override
+public void abort(AbortRequest request, StreamObserver<Ack> responseObserver) {
+    pending.remove(request.getTransactionId()); // discard
+    System.out.println("❌ Abort received for txn " + request.getTransactionId());
+    responseObserver.onNext(Ack.newBuilder().setStatus("aborted").build());
+    responseObserver.onCompleted();
+}
 
 }

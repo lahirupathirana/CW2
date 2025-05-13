@@ -69,6 +69,31 @@ public final class ReservationProto {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_SyncResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_PrepareRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_PrepareRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_PrepareResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_PrepareResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_CommitRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_CommitRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_AbortRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_AbortRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Ack_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_Ack_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -94,15 +119,24 @@ public final class ReservationProto {
       "r\030\001 \001(\t\"M\n\010ShowData\022\020\n\010showName\030\001 \001(\t\022\024\n" +
       "\014concertSeats\030\002 \001(\005\022\031\n\021afterPartyTickets" +
       "\030\003 \001(\005\"(\n\014SyncResponse\022\030\n\005shows\030\001 \003(\0132\t." +
-      "ShowData2\223\002\n\022ReservationService\022,\n\007AddSh" +
-      "ow\022\017.AddShowRequest\032\020.AddShowResponse\022>\n" +
-      "\rReserveTicket\022\025.ReserveTicketRequest\032\026." +
-      "ReserveTicketResponse\0228\n\rGetShowStatus\022\022" +
-      ".ShowStatusRequest\032\023.ShowStatusResponse\022" +
-      "-\n\nSyncUpdate\022\016.UpdateRequest\032\017.UpdateRe" +
-      "sponse\022&\n\007syncAll\022\014.SyncRequest\032\r.SyncRe" +
-      "sponseB!\n\013com.concertB\020ReservationProtoP" +
-      "\001b\006proto3"
+      "ShowData\"f\n\016PrepareRequest\022\025\n\rtransactio" +
+      "nId\030\001 \001(\t\022\020\n\010showName\030\002 \001(\t\022\023\n\013ticketCou" +
+      "nt\030\003 \001(\005\022\026\n\016needAfterParty\030\004 \001(\010\"%\n\017Prep" +
+      "areResponse\022\022\n\nvoteCommit\030\001 \001(\010\"8\n\rCommi" +
+      "tRequest\022\025\n\rtransactionId\030\001 \001(\t\022\020\n\010showN" +
+      "ame\030\002 \001(\t\"7\n\014AbortRequest\022\025\n\rtransaction" +
+      "Id\030\001 \001(\t\022\020\n\010showName\030\002 \001(\t\"\025\n\003Ack\022\016\n\006sta" +
+      "tus\030\001 \001(\t2\377\002\n\022ReservationService\022,\n\007AddS" +
+      "how\022\017.AddShowRequest\032\020.AddShowResponse\022>" +
+      "\n\rReserveTicket\022\025.ReserveTicketRequest\032\026" +
+      ".ReserveTicketResponse\0228\n\rGetShowStatus\022" +
+      "\022.ShowStatusRequest\032\023.ShowStatusResponse" +
+      "\022-\n\nSyncUpdate\022\016.UpdateRequest\032\017.UpdateR" +
+      "esponse\022&\n\007syncAll\022\014.SyncRequest\032\r.SyncR" +
+      "esponse\022,\n\007Prepare\022\017.PrepareRequest\032\020.Pr" +
+      "epareResponse\022\036\n\006Commit\022\016.CommitRequest\032" +
+      "\004.Ack\022\034\n\005Abort\022\r.AbortRequest\032\004.AckB!\n\013c" +
+      "om.concertB\020ReservationProtoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -174,6 +208,36 @@ public final class ReservationProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_SyncResponse_descriptor,
         new java.lang.String[] { "Shows", });
+    internal_static_PrepareRequest_descriptor =
+      getDescriptor().getMessageTypes().get(11);
+    internal_static_PrepareRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_PrepareRequest_descriptor,
+        new java.lang.String[] { "TransactionId", "ShowName", "TicketCount", "NeedAfterParty", });
+    internal_static_PrepareResponse_descriptor =
+      getDescriptor().getMessageTypes().get(12);
+    internal_static_PrepareResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_PrepareResponse_descriptor,
+        new java.lang.String[] { "VoteCommit", });
+    internal_static_CommitRequest_descriptor =
+      getDescriptor().getMessageTypes().get(13);
+    internal_static_CommitRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_CommitRequest_descriptor,
+        new java.lang.String[] { "TransactionId", "ShowName", });
+    internal_static_AbortRequest_descriptor =
+      getDescriptor().getMessageTypes().get(14);
+    internal_static_AbortRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_AbortRequest_descriptor,
+        new java.lang.String[] { "TransactionId", "ShowName", });
+    internal_static_Ack_descriptor =
+      getDescriptor().getMessageTypes().get(15);
+    internal_static_Ack_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_Ack_descriptor,
+        new java.lang.String[] { "Status", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
