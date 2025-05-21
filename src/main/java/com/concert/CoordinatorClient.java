@@ -47,14 +47,14 @@ public class CoordinatorClient {
 
                 if (!response.getVoteCommit()) {
                     allCommit = false;
-                    System.out.println("❌ One server voted ABORT");
+                    System.out.println("One server voted ABORT");
                     break;
                 }
             }
 
             // === Phase 2: COMMIT or ABORT ===
             if (allCommit) {
-                System.out.println("✅ All servers voted COMMIT. Sending COMMIT...");
+                System.out.println("All servers voted COMMIT. Sending COMMIT...");
                 for (ReservationServiceGrpc.ReservationServiceBlockingStub stub : stubs) {
                     stub.commit(CommitRequest.newBuilder()
                             .setTransactionId(transactionId)
@@ -62,7 +62,7 @@ public class CoordinatorClient {
                             .build());
                 }
             } else {
-                System.out.println("⚠️ Aborting transaction...");
+                System.out.println("Aborting transaction...");
                 for (ReservationServiceGrpc.ReservationServiceBlockingStub stub : stubs) {
                     stub.abort(AbortRequest.newBuilder()
                             .setTransactionId(transactionId)
@@ -72,7 +72,7 @@ public class CoordinatorClient {
             }
 
         } catch (Exception e) {
-            System.err.println("💥 Error during transaction: " + e.getMessage());
+            System.err.println(" Error during transaction: " + e.getMessage());
         } finally {
             for (ManagedChannel ch : channels) {
                 ch.shutdown();

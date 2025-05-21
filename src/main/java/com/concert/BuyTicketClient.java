@@ -1,9 +1,9 @@
 package com.concert;
 
+import java.util.Scanner;
+
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-
-import java.util.Scanner;
 
 public class BuyTicketClient {
 
@@ -36,7 +36,7 @@ public class BuyTicketClient {
         System.out.println("Available: " + remainingConcert + " concert, " + remainingAfterParty + " after-party");
 
         if (remainingConcert < 3 && remainingAfterParty > 0) {
-            System.out.println("⚠️  Less than 3 tickets left. Combo booking is mandatory.");
+            System.out.println("Less than 3 tickets left. Combo booking is mandatory.");
             includeAfterParty = true;
         }
 

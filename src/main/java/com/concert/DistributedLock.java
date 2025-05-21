@@ -32,7 +32,7 @@ public class DistributedLock {
         String fullPath = zkClient.createEphemeralSequential(lockBasePath + "/lock_", nodeId.getBytes());
         this.lockNodePath = fullPath;
 
-        System.out.println("🟡 Server starting as follower on port " + port + "...");
+        System.out.println("Server starting as follower on port " + port + "...");
 
         new Thread(() -> {
             try {
@@ -45,7 +45,7 @@ public class DistributedLock {
                     if (smallestNode.equals(myNode)) {
                         if (!ReservationServiceImpl.isLeader) {
                             ReservationServiceImpl.isLeader = true;
-                            System.out.println("🔺 Server on port " + port + " is now the LEADER");
+                            System.out.println("Server on port " + port + " is now the LEADER");
                         }
                         break;
                     } else {

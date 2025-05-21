@@ -196,7 +196,7 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
     public void syncFromLeader() {
         if (!isLeader) {
             try {
-                System.out.println("🔄 Syncing from leader...");
+                System.out.println("Syncing from leader...");
                 ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
                         .usePlaintext().build();
 
@@ -211,12 +211,12 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
                 for (ShowData show : response.getShowsList()) {
                     shows.put(show.getShowName(),
                             new Show(show.getConcertSeats(), show.getAfterPartyTickets()));
-                    System.out.println("🟢 Synced: " + show.getShowName());
+                    System.out.println(" Synced: " + show.getShowName());
                 }
 
                 channel.shutdown();
             } catch (Exception e) {
-                System.err.println("❌ Failed to sync: " + e.getMessage());
+                System.err.println("Failed to sync: " + e.getMessage());
             }
         }
     }
@@ -248,7 +248,7 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
             if (res.withAfterParty) {
                 show.afterPartyTickets -= res.ticketCount;
             }
-            System.out.println("✅ Commit completed on " + currentPort + " for " + res.showName);
+            System.out.println(" Commit completed on " + currentPort + " for " + res.showName);
         }
 
         responseObserver.onNext(Ack.newBuilder().setStatus("committed").build());
@@ -257,7 +257,7 @@ public class ReservationServiceImpl extends ReservationServiceGrpc.ReservationSe
     @Override
 public void abort(AbortRequest request, StreamObserver<Ack> responseObserver) {
     pending.remove(request.getTransactionId()); // discard
-    System.out.println("❌ Abort received for txn " + request.getTransactionId());
+    System.out.println(" Abort received for txn " + request.getTransactionId());
     responseObserver.onNext(Ack.newBuilder().setStatus("aborted").build());
     responseObserver.onCompleted();
 }

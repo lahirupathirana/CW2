@@ -26,9 +26,9 @@ public class FollowerSyncClient {
 
         try {
             UpdateResponse response = stub.syncUpdate(request);
-            System.out.println("✅ Follower " + port + " sync result: " + response.getStatus());
+            System.out.println("Follower " + port + " sync result: " + response.getStatus());
         } catch (Exception e) {
-            System.out.println("❌ Could not sync with follower " + port + ": " + e.getMessage());
+            System.out.println("Could not sync with follower " + port + ": " + e.getMessage());
         }
 
         channel.shutdown();

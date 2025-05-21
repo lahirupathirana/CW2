@@ -32,10 +32,13 @@ public class ReservationServer {
                 .build();
 
         server.start();
-        System.out.println("✅ Reservation gRPC server active on port " + port);
+        System.out.println("Reservation gRPC server active on port " + port);
         // ReservationServiceImpl service = new ReservationServiceImpl(port, isLeader);
         if (!ReservationServiceImpl.isLeader) {
+            System.out.println("Fallower as on port " + port);
             service.syncFromLeader();
+        }else {
+            System.out.println("Leader elected on port " + port);
         }
         server.awaitTermination();
     }
